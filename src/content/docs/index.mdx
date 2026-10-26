@@ -1,0 +1,120 @@
+---
+title: SeinARTS Framework
+description: Build deterministic, designer-authored real-time strategy games in Unreal Engine 5.
+template: splash
+pagefind: false
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import wordmarkUrl from '../../assets/brand/SeinARTSWordmarkVectorized.svg?url';
+import phenomWordmarkUrl from '../../assets/phenom-wordmark.svg?url';
+
+<main class="sein-home">
+	<section class="sein-home-hero" aria-labelledby="sein-home-title">
+		<div class="sein-home-hero__inner">
+			<div class="sein-home-hero__brand">
+				<img class="sein-home-hero__wordmark" src={wordmarkUrl} alt="SeinARTS Framework" />
+				<h1 id="sein-home-title" class="sr-only">SeinARTS Framework</h1>
+				<p class="sein-home-hero__credit">
+					<span>By</span>
+					<img src={phenomWordmarkUrl} alt="Phenom Studios" width="912" height="201" />
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="sein-home-intro" aria-label="SeinARTS Framework overview">
+		<p class="sein-home-tagline">A modular, deterministic lockstep RTS framework for Unreal Engine 5.</p>
+		<div class="sein-home-actions">
+			<LinkButton href="/getting-started/" icon="right-arrow">Get started</LinkButton>
+			<LinkButton href="/ecosystem/" icon="open-book" variant="minimal">Explore the ecosystem</LinkButton>
+		</div>
+	</section>
+
+	<section class="sein-home-topics" aria-labelledby="sein-home-topics-title">
+		<div class="sein-home-section-inner">
+			<h2 id="sein-home-topics-title">Documentation</h2>
+			<p>Build a demo from a blank project and learn the framework as you create each part.</p>
+			<div class="topic-grid">
+				<div class="topic-card topic-card--wide">
+					<a href="/guides/creating-the-demo-project/" class="topic-card__title">Build the Demo <span class="topic-card__arrow">→</span></a>
+					<p class="topic-card__desc">Start with installation and project settings, then author the demo one step at a time.</p>
+					<div class="topic-card__foot">
+						<span class="topic-card__label">Explore topics</span>
+						<div class="topic-card__links">
+							<a href="/guides/creating-the-demo-project/">Create the Demo Project</a>
+							<a href="/guides/creating-gameplay-classes-and-input/">Gameplay Classes and Input</a>
+							<a href="/guides/creating-the-first-level/">Create the First Level</a>
+							<a href="/guides/creating-the-soldier/">Create the Soldier</a>
+							<a href="/guides/adding-movement/">Add Movement</a>
+							<a href="/guides/adding-combat/">Add Combat</a>
+							<a href="/guides/adding-mineral-income/">Add Mineral Income</a>
+							<a href="/guides/building-the-hud/">Build the HUD</a>
+							<a href="/guides/building-production-buildings/">Production Buildings</a>
+							<a href="/guides/adding-production-and-research/">Production and Research</a>
+							<a href="/guides/adding-fog-and-a-minimap/">Fog and Minimap</a>
+							<a href="/guides/creating-the-skirmish-lobby/">Skirmish Lobby</a>
+							<a href="/guides/packaging-and-verifying-the-demo/">Package and Verify</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="topic-card">
+					<a href="/core-concepts/deterministic-simulation/" class="topic-card__title">Core Concepts <span class="topic-card__arrow">→</span></a>
+					<p class="topic-card__desc">Understand the architecture and design principles behind the framework.</p>
+					<div class="topic-card__foot">
+						<span class="topic-card__label">Explore topics</span>
+						<div class="topic-card__links">
+							<a href="/core-concepts/deterministic-simulation/">Deterministic Simulation</a>
+							<a href="/core-concepts/units-components-abilities/">Units, Components & Abilities</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="topic-card">
+					<a href="/ecosystem/" class="topic-card__title">Plugin Ecosystem <span class="topic-card__arrow">→</span></a>
+					<p class="topic-card__desc">Choose only what your game needs: the framework and an opt-in Online Services extension.</p>
+					<div class="topic-card__foot">
+						<span class="topic-card__label">Explore topics</span>
+						<div class="topic-card__links">
+							<a href="/ecosystem/">SeinARTS Framework</a>
+							<a href="/ecosystem/">SeinARTS Online Services</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="sein-home-core" aria-labelledby="sein-home-core-title">
+		<div class="sein-home-section-inner">
+			<h2 id="sein-home-core-title">Build on a deterministic core</h2>
+			<p>SeinARTS separates authoritative simulation from presentation so the game state can remain reproducible across peers while Unreal Engine handles rendering, input, and authoring.</p>
+
+			<CardGrid stagger>
+				<Card title="Deterministic by design" icon="setting">
+					Fixed-point simulation, one saved world state, and lockstep command exchange are foundational contracts rather than optional modes.
+				</Card>
+				<Card title="Designer authored" icon="pencil">
+					Units are Blueprint classes, components are data, and commands such as move or attack are composed as abilities.
+				</Card>
+				<Card title="Modular extensions" icon="add-document">
+					Add online services or your own game features without making the core framework depend on them.
+				</Card>
+				<Card title="One-way presentation" icon="document">
+					Simulation state flows into rendering. Presentation can react to the simulation, but it never feeds authoritative state back into it.
+				</Card>
+			</CardGrid>
+		</div>
+	</section>
+
+	<section class="sein-home-ecosystem" aria-labelledby="sein-home-ecosystem-title">
+		<div class="sein-home-section-inner">
+			<h2 id="sein-home-ecosystem-title">Choose only what your game needs</h2>
+			<p>The ecosystem contains one required framework plugin and one opt-in production extension. Your game's own features live in your modules, built on the framework's public seams, so projects keep a precise dependency footprint.</p>
+			<div class="sein-home-actions">
+				<LinkButton href="/ecosystem/" icon="right-arrow">See the plugin map</LinkButton>
+			</div>
+		</div>
+	</section>
+</main>
