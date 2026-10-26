@@ -109,7 +109,7 @@ DefaultPlayerInputClass=/Script/EnhancedInput.EnhancedPlayerInput
 DefaultInputComponentClass=/Script/EnhancedInput.EnhancedInputComponent
 ```
 
-Changing the default world-settings class does not establish a player slot, create a faction, or wire input events. Those are assets and level configuration that you will author in the following steps.
+Changing the default world-settings class does not establish a player slot or wire input events. Those are assets and level configuration that you will author in the following steps.
 
 ## Checkpoint
 
