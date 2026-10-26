@@ -44,7 +44,7 @@ Add a function `TryShot` with an input `Target` (Sein Entity Handle) and a Boole
 
 1. Read the owner's weapon with **Get Attribute** (Entity **Owner Entity**, Component Type `SC_CombatData`, Field `Damage`, and again for `Range`). Get Attribute reads the field's effective value, after any upgrades.
 2. **Make Sein Target Query**: Instigator **Owner Entity**, Range from `Range`, Required Component `SC_HealthData`. **Check Target** with the query and `Target`, then **Switch on ESeinTargetCheckResult**. Every result but **Eligible** returns `Continue` false.
-3. On Eligible: **Notify Damage Applied** (Target, Source **Owner Entity**, Amount the **Min** of Damage and the target's `Health`), then **Apply Field Delta** on the target's `SC_HealthData` field `Health` with Delta **Negate** Damage and **Clamp Min** on.
+3. On Eligible: add a local Fixed Point variable `Dealt` and set it to the **Min** of Damage and the target's `Health`, the damage this shot actually deals. Then **Apply Field Delta** on the target's `SC_HealthData` field `Health` with Delta **Negate** Damage and **Clamp Min** on, and after it **Notify Damage Applied** (Target, Source **Owner Entity**, Amount `Dealt`). `Dealt` is read before the write, so a killing shot still reports the health it took.
 4. If **At Min**, the target is dead: **Notify Death** (Dying the target, Killer the owner), **Destroy Entity** on the target, and return false. Otherwise return true.
 
 ![SA_Attack's TryShot.](../../../assets/guides/adding-combat/tryshot-graph.png)
@@ -81,13 +81,13 @@ A passive ability activates when granted and ticks for the unit's lifetime. With
 
 Override **On Tick**:
 
-1. Skip the tick when the owner **Has Tag** `SeinARTS.Ability`, meaning an order is running, or is not **In World**, for example while riding in a Truck.
+1. Skip the tick when the owner **Has Tag** `SeinARTS.Ability`, meaning an order is running, or **Is In World** is false, for example while riding in a Truck.
 2. Count `TimeUntilShot` down to zero, clamping with **Max** so it waits at zero.
-3. At zero, **Find Targets** with the same query as `TryShot`. If the result **Is Not Empty**, call `TryShot` on the first candidate's Entity and set `TimeUntilShot` to **One** divided by `RateOfFire`.
+3. At zero, **Find Targets** with the same query as `TryShot`. If the result **Is Not Empty**, call `TryShot` on the first candidate's **Target** and set `TimeUntilShot` to **One** divided by `RateOfFire`.
 
 ![SA_AutoAttack's On Tick.](../../../assets/guides/adding-combat/autoattack-graph.png)
 
-Find Targets returns the nearest eligible entities first. The default scorer skips the unit's own side, and Required Component skips anything without health, such as mineral rocks.
+Find Targets returns the nearest eligible entities first. The default scorer skips only entities the unit's own player owns, and Required Component skips anything without health, such as mineral rocks. In a game with allied players, set the query's **Scorer Class** to a target scorer that also skips allies, or Auto-Attack fires on them.
 
 ## 4. Grant and map
 

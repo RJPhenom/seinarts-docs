@@ -32,7 +32,7 @@ The starts spawn nothing yet. The Soldier chapter gives them a starting unit.
 
 ## 3. Bound the playable area and bake
 
-Add a **Sein Level Volume** at the origin and scale its brush to `(7.9, 7.9, 10)`, so it fits inside the floor's edges and spans well above and below its surface.
+Add a **Sein Level Volume** at the origin. It arrives as a `200`-unit cube; set its Scale to `(79, 79, 10)`, a box `15,800` units across and `2,000` tall, so it fits inside the floor's edges and spans well above and below its surface.
 
 Select the volume and press **Bake Level Data**. The bake traces the ground and writes the navigation and fog grids into a level data asset under `Content/SeinARTS/LevelData`; the volume's **Baked Asset** then names it. Save the map.
 

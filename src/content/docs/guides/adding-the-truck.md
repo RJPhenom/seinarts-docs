@@ -63,7 +63,7 @@ Create a Sein entity Blueprint `SU_Truck` in `Content/Demo/Units`. Add a Static 
 | `HealthBar` (Sein Entity Widget) | As on the Soldier, Location Z `330` |
 | `BPC_SelectionRing` | Location Z `3`, Scale `(4, 4, 1)` |
 
-Turn Rate on the movement component is unused by `SM_TruckSteering`; the mode's own variables set how it turns.
+Turn Rate still caps how fast any movement mode can turn the Truck, in radians per second. The steering turns at most Speed ÷ `TurnRadius`, about `1.7`, so a cap of `10` never binds and the mode's own variables decide how it turns.
 
 ## 4. Board: SA_Load
 
@@ -112,7 +112,7 @@ Open `SU_Soldier`. On its Sein Abilities component, add `SA_Load` to Granted Abi
 | --- | --- | --- |
 | Right Click, Target Friendly, `SeinARTS.Unit.Truck` | `SeinARTS.Ability.Load` | `10` |
 
-The command context holds the target's own tags, its identity tag among them, so a mapping can require what the target is as well as whose it is. Priority `10` beats the plain Move on Target Friendly.
+The command context holds the target's own tags, its identity tag among them, so a mapping can require what the target is as well as whose it is. The Soldier's other friendly mapping, Build, also requires `SeinARTS.State.UnderConstruction`, so the two never match the same target.
 
 ## 7. Produce it at the Factory
 

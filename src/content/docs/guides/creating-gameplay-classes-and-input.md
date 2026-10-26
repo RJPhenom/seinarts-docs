@@ -22,7 +22,7 @@ In the Content Browser, create the folder `Content/Demo/Core`. In it, right-clic
 | `GS_Demo` | Sein Game State | The match's shared state for widgets |
 | `GM_Demo` | Sein Game Mode | Names the classes above and builds the match |
 
-Open `BP_DemoCamera` and select **SpringArm**: set its rotation Pitch to `-50` for an angled top-down view. The parent already supplies the pivot, spring arm and camera.
+Open `BP_DemoCamera`. In **Class Defaults**, **Camera Pitch** sets the angled top-down view; keep its default `-50`. The camera applies it to the spring arm when play begins, so don't set the SpringArm's own rotation. The parent already supplies the pivot, spring arm and camera.
 
 Open `GM_Demo`. In **Class Defaults** set:
 

@@ -60,7 +60,7 @@ Back in `SU_Soldier`, select `SoldierMesh`, set **Animation Mode** to **Use Anim
 
 ## 4. Give it a body and sight
 
-Add **Sein Extents** and add one entry to **Shapes**: the default capsule, radius `40` and height `180`, standing on the actor's origin. The extents are the unit's body for selection, collision and navigation clearance; no Unreal collision is needed. Leave **Mobility** Movable and **Collision Enabled** on.
+Add **Sein Extents** and add one entry to **Shapes**: the default capsule, radius `40` and height `180`, standing on the actor's origin. The extents are the unit's body for selection, collision and navigation clearance; no Unreal collision is needed. Turn **Collision Enabled** on, so Soldiers push each other apart instead of overlapping, and leave the **Mobility** it reveals at Movable.
 
 Add **Sein Vision**. Its default stamp is a `1,000`-unit circle that reveals the map for the owning player; set **Eye Height** to `180`.
 

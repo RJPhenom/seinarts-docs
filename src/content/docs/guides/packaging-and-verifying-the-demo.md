@@ -18,7 +18,7 @@ Complete [Create the Main Menu and Lobby](/guides/creating-the-skirmish-lobby/) 
 Use **Platforms > Windows > Package Project**, configuration **Development**, into a folder outside the project's source tree. The same build from the command line:
 
 ```powershell
-& "<Engine>\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="<Project>\SeinARTS.uproject" -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory="<Output>" -unattended
+& "<Engine>\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="<Project>\SeinDemo.uproject" -noP4 -platform=Win64 -clientconfig=Development -build -cook -stage -pak -archive -archivedirectory="<Output>" -unattended
 ```
 
 Read the end of the packaging log for `BUILD SUCCESSFUL` and check it for errors; an executable in the output folder does not prove the cook succeeded.
@@ -27,7 +27,7 @@ The cook stamps a hash of the simulation content into the package. When a match 
 
 ## 3. Play against the computer
 
-Run `Windows\SeinARTS.exe` from the output folder. The menu opens. Host, set slot 2 to Computer, Ready and Start, then play the whole loop:
+Run `Windows\SeinDemo.exe` from the output folder. The menu opens. Host, set slot 2 to Computer, Ready and Start, then play the whole loop:
 
 | Action | Expected |
 | --- | --- |

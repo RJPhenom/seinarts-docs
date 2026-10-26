@@ -20,13 +20,15 @@ Open **Project Settings > Plugins > SeinARTS** and, in the **Economy** category,
 | Spend Behavior | Reject On Insufficient |
 | Production Deduction Timing | At Enqueue |
 
-The catalog defines every resource the game knows. Which ones a player has comes from their faction.
+The catalog defines every resource the game knows, and every player starts with each of them at its default. A faction can change a resource's starting value or cap for its players.
 
 ## 2. Create the faction
 
 In `Content/Demo/Core`, create a **Data Asset** of class **Sein Faction** named `FA_Demo`: Faction Name `Demo`, Faction ID `1`, and one **Resource Kit** entry for `SeinARTS.Resource.Minerals` with no overrides.
 
-On the same settings page, in the **Match** category, add `FA_Demo` to **Registered Factions**. Every player in the demo plays this faction.
+On the same settings page, in the **Match** category, add `FA_Demo` to **Registered Factions**.
+
+A player's faction comes from their slot. When you play `LVL_Game` directly, the slots come from the Sein Player Starts: select both and set **Faction ID** to `1`. A lobby seats players without a faction, which is harmless here: `FA_Demo` changes nothing, so every player still starts with 500 Minerals from the catalog.
 
 ## 3. The mineral rock
 
@@ -86,7 +88,8 @@ Play, select your Soldier and right-click a rock by your start. It walks over an
 
 ## Checkpoint
 
-- `SeinARTS.Resource.Minerals` is in the Resource Catalog, and `FA_Demo` carries it.
+- `SeinARTS.Resource.Minerals` is in the Resource Catalog, so every player starts with 500.
+- `FA_Demo` is registered, and both Sein Player Starts have Faction ID `1`.
 - `SBP_MineralRock` is a neutral entity with `SC_Deposit`.
 - `SA_Mine` grants income on a fixed interval and removes an empty rock.
 

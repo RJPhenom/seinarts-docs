@@ -5,7 +5,7 @@ description: Darken what the local player cannot see, and draw a minimap with fo
 
 ![Fog of war around the starting base, with the minimap in the corner.](../../../assets/guides/adding-fog-and-a-minimap/fog-header.png)
 
-Complete [Add the Truck](/guides/adding-the-truck/) first. Every unit and building already carries a **Sein Vision** component (one radial stamp, radius `1000`), and fog of war is on in Project Settings > Plugins > SeinARTS (Fog Of War Class `SeinFogOfWarDefault`). This chapter makes the fog visible and adds the minimap the HUD left room for.
+Complete [Add the Truck](/guides/adding-the-truck/) first. Every unit and building already carries a **Sein Vision** component (one radial stamp: radius `1000`, or `1200` on the Truck), and fog of war is on in Project Settings > Plugins > SeinARTS (Fog Of War Class `SeinFogOfWarDefault`). This chapter makes the fog visible and adds the minimap the HUD left room for.
 
 ## 1. Create the fog material
 

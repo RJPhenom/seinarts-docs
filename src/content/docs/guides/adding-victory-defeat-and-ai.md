@@ -13,7 +13,7 @@ A player is defeated when they own no units or buildings. Rules that belong to a
 
 In `Content/Demo/Rules`, right-click and choose **SeinARTS > SeinARTS Ability**, pick **Generic Ability** and name it `SA_Elimination`. In its Class Defaults set Ability Name `Elimination`, **Is Passive** on and Target Type **None**. A passive ability activates when it is granted and runs its On Tick every simulation tick.
 
-In **On Tick**: **Get Entity Owner** of the ability's **Owner Entity** (the player), then **Get Player Entities** for that player with Skip Abstract Entities on. If the array **Is Empty**, call **Defeat Player** with Reason `SeinARTS.Defeat.Eliminated` and **End Ability**.
+In **On Tick**: **Get Entity Owner** of the ability's **Owner Entity** (the player), then **Get Player Entities** for that player with Skip Abstract Entities on. If the array **Is Empty**, call **Defeat Player** with Reason `SeinARTS.Defeat.Eliminated` (add the tag when prompted) and **End Ability**.
 
 ![SA_Elimination.](../../../assets/guides/adding-victory-defeat-and-ai/elimination-graph.png)
 
@@ -54,7 +54,7 @@ Wire the buttons' **On Clicked**:
 | Concede | TogglePauseMenu, then **Concede Match** |
 | Quit | **Quit Game** for the owning player |
 
-`IA_Menu` is mapped to **Escape**. In the editor, Escape also stops Play In Editor, so add **F10** to `IA_Menu` in `IMC_Demo` as well.
+`IA_Menu` is already mapped to **Escape** and **F10** in `IMC_Demo`, so either key opens the menu.
 
 ![The pause menu.](../../../assets/guides/adding-victory-defeat-and-ai/pause-menu.png)
 

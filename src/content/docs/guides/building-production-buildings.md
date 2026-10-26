@@ -85,11 +85,11 @@ Placing is a separate order from building. Create an ability `SA_Place`, the sha
 | Out Of Range Behavior | Auto Move Then |
 | Requires Free Footprint | On |
 | Cancel Abilities With Tag | `SeinARTS.Ability` |
-| Targeter Spec | **Sein Point Facing Targeter Spec** |
+| Targeter Spec | **Point + Facing Targeter Spec** |
 
 Add a variable `BuildingClass`, an **Actor** class reference.
 
-**Single** dispatch sends the order to one selected Soldier, not all of them. The **Point Facing** targeter lets the player click a spot and drag to turn the building. **Requires Free Footprint** refuses a spot the building's extents would overlap.
+**Single** dispatch sends the order to one selected Soldier, not all of them. The **Point + Facing** targeter lets the player click a spot and drag to turn the building. **Requires Free Footprint** refuses a spot the building's extents would overlap.
 
 On **On Activate**:
 
@@ -103,12 +103,12 @@ The placer orders itself to build the site it just placed, through the same orde
 
 Right-click `SA_Place` and create two child Blueprints:
 
-| Child | Ability Name | BuildingClass and Placement > Actor Class | Resource Cost |
+| Child | Ability Name | BuildingClass and Footprint Actor Class | Resource Cost |
 | --- | --- | --- | --- |
 | `SA_Place_Barracks` | `Build Barracks` | `SU_Barracks` | `150` Minerals |
 | `SA_Place_Factory` | `Build Factory` | `SU_Factory` | `250` Minerals |
 
-**Placement > Actor Class** gives the targeter its ghost: while placing, the player sees the building's meshes at the cursor. The cost is paid when the order activates and refunded if it is cancelled.
+**Footprint Actor Class**, under **Targeting** once Requires Free Footprint is on, gives the targeter its ghost: while placing, the player sees the building's meshes at the cursor. The cost is paid when the order activates and refunded if it is cancelled.
 
 **Tint the ghost.** Untinted, the ghost looks the same on a free spot and a blocked one. In `Content/Demo/Art/Materials`, create a material `M_PlacementGhost`: Blend Mode **Translucent**, Shading Model **Unlit**, a Vector Parameter `Color` into Emissive Color and a Scalar Parameter `Opacity` (`0.45`) into Opacity. Create two instances of it: `MI_PlacementValid` with Color green and `MI_PlacementBlocked` with Color red.
 

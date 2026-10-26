@@ -50,7 +50,7 @@ Create a child, `SA_Produce_Soldier`: Ability Name `Train Soldier`, `ProducibleC
 
 **Rally.** Create `SA_SetRally`: Ability Name `Set Rally Point`, Target Type Point. On Activate: **Set Rally Point** with **Make Fixed Transform** of **Target Location**, then End Ability. New units walk to the rally point with their Move Ability.
 
-**Cancel.** Create `SA_CancelProduction`: Ability Name `Cancel`, Dispatch Mode Single. On Activate: **Get Production Data** of the Owner Entity, **Cancel Production** at index **Length** of its Queue minus `1`, then End Ability. It removes the newest entry and refunds its cost.
+**Cancel.** Create `SA_CancelProduction`: Ability Name `Cancel`, Dispatch Mode Single. On Activate: **Get Production Data** of the Owner Entity, **Cancel Production** at index **Length** of its Queue minus `1`, then End Ability. It removes the newest entry and refunds it: a waiting entry returns its whole cost, and the entry in production returns only the share not yet built.
 
 On both buildings, grant `SA_SetRally` and `SA_CancelProduction`, and add a Default Command: Right Click, Target Ground → `SeinARTS.Ability.SetRally`. With a building selected, a right-click on the ground sets its rally point.
 
@@ -74,12 +74,14 @@ Create the folder `Content/Demo/Research`.
 | Granted Tags | `SeinARTS.Tech.Training` | `SeinARTS.Tech.MotorPool` |
 | Forbidden Prerequisite Tags | `SeinARTS.Tech.Training` | `SeinARTS.Tech.MotorPool` |
 
+The two Tech tags are the project's own: add each when the tag picker offers to, as you did for Minerals.
+
 Give `SE_Training` two **Modifiers**, both Target **Component**, Operation **Multiply**:
 
 | Component Type | Field | Value |
 | --- | --- | --- |
-| `SeinMovementPayload` | `Speed` | `1.3` |
-| `SeinProduciblePayload` | `BuildTime` | `0.77` |
+| **Sein Movement Data** | `Speed` | `1.3` |
+| **Sein Producible Data** | `BuildTime` | `0.77` |
 
 A Class-scoped effect changes every unit of the target class its player owns, including units produced later. The modifiers change the fields' effective values, which the movement system and production queue read, so Soldiers move at `455` and train in about `4.6` seconds. The Soldier's authored values stay as they are.
 
@@ -113,7 +115,7 @@ Play:
 
 1. Select the Barracks: Train Soldier, Research Training, Research Motor Pool, Set Rally Point and Cancel.
 2. Right-click ground to set a rally point. Click **Train Soldier** twice: Minerals drop by 100, the queue row shows both, and each Soldier walks to the rally point six seconds apart.
-3. Queue a Soldier and click **Cancel**: it leaves the queue and the 50 Minerals return.
+3. Queue two Soldiers and click **Cancel**: the second leaves the queue and its 50 Minerals return. Click **Cancel** again: the first leaves too, returning less the further it had trained.
 4. Research **Motor Pool**. Before it completes, Build Factory is disabled for your Soldiers; afterwards it works.
 5. Research **Training**: Soldiers visibly walk faster, and the next ones train faster.
 

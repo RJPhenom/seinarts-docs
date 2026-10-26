@@ -7,7 +7,7 @@ description: Show Minerals, the selection, its actions and the production queue 
 
 Complete [Add Mineral Income](/guides/adding-mineral-income/) first. This chapter builds the in-match HUD: the Minerals counter, an info panel for the selection, a banner per selected unit, the selected building's production queue and an action grid. The HUD lists whatever the selection can do, so the buildings, production and Truck in the next chapters appear in it without changes. A Sein User Widget reads everything from the framework's **view models**, which present the simulation read-only. The HUD never writes simulation state; its buttons only issue orders, like a right-click.
 
-All widgets in this chapter are created with **Add > User Interface > Sein User Widget** (or a Widget Blueprint whose parent is **Sein User Widget**) in `Content/Demo/UI`.
+All widgets in this chapter are created in `Content/Demo/UI` with **Add > SeinARTS > View Model Widget** (under **User Interface**), keeping its parent **Sein User Widget**. A Widget Blueprint whose parent you set to Sein User Widget is the same thing.
 
 ## 1. Slot widgets that refresh from their parent
 

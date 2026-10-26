@@ -48,7 +48,7 @@ The Blank template's generated C++ files provide the build target. The series au
 
 Create a `Plugins` directory beside `SeinDemo.uproject`.
 
-From the downloaded repository, copy `Plugins/SeinARTSFramework` into that directory. For a source installation, copy the descriptor and the source/support directories that exist: `Source`, `Content`, `Config`, `Resources`, and `Shaders`. Do not reuse the source checkout's `Binaries`, `Intermediate`, or `Saved` directories.
+From the downloaded repository, copy `Plugins/SeinARTSFramework` into that directory. For a source installation, copy the descriptor and its `Source`, `Content`, `Config` and `Resources` directories. Do not reuse the source checkout's `Binaries`, `Intermediate`, or `Saved` directories.
 
 The resulting layout must include:
 
