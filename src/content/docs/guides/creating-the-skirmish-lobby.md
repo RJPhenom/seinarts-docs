@@ -92,6 +92,8 @@ Open `LVL_MainMenu` and Play:
 
 Play two standalone windows, or two copies of a packaged build. One clicks **Host**. The other enters the host's address (`127.0.0.1` on the same machine) and clicks **Join**: it takes slot 2. Both click Ready, and the host clicks Start. Each player controls only their own forces, and each sees only their own fog.
 
+If a player drops mid-match, the match goes on without them, and **Project Settings > SeinARTS > Network > Vacant Seat Policy** decides what happens to their seat: whether the Game Mode's AI Controller Class takes it over, whether a new player may take it, each after a delay, and when the player who dropped may come back. The demo keeps the default: the computer takes over after 30 seconds, and the player may rejoin at any time and take the seat back. To decide per match or per seat, override **Get Vacant Seat Policy** in the Game Mode.
+
 ## Checkpoint
 
 - The menu map runs no simulation.
