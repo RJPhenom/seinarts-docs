@@ -5,8 +5,8 @@ description: Understand the SeinARTS architecture and choose the plugins your pr
 
 SeinARTS is a deterministic lockstep RTS framework for Unreal Engine 5. Its C++ layer provides deterministic primitives and infrastructure; designers assemble game-specific behavior in Blueprint.
 
-:::caution[Pre-release documentation]
-SeinARTS is undergoing production-readiness qualification. Versioned installation, compatibility, and migration instructions will be published with the first public package. This guide currently covers the stable architecture and authoring model without promising an unreleased distribution workflow.
+:::caution[Prerelease]
+SeinARTS is distributed to licensees as prebuilt plugin packages for Unreal Engine 5.8 on Win64. The 0.3 releases are prereleases: APIs, saves and replays may change between releases without migration.
 :::
 
 ## 1. Start with the framework

@@ -14,25 +14,13 @@ This series builds a small RTS demo from an empty project, all of it in Blueprin
 - Elimination defeat, victory, a pause menu and a computer opponent for slot 2.
 - A packaged game that two players can play over a network.
 
-The repository's `Content/Demo` is the finished result, for reference. Here you author it yourself from the framework's classes and Blueprint nodes. This first chapter installs the framework and prepares the project; its checkpoint is a configured editor, not a playable scene.
+You author the demo yourself from the framework's classes and Blueprint nodes. This first chapter installs the framework and prepares the project; its checkpoint is a configured editor, not a playable scene.
 
-## 1. Prepare the tools and framework source
+## 1. Prepare the tools and the framework package
 
-Use **Unreal Engine 5.8** for the current framework source. Install it through the Epic Games Launcher before creating the project.
+This guide assumes you hold a SeinARTS license and have its release package: `SeinARTSFramework.zip`, prebuilt for **Unreal Engine 5.8** on Win64. `SeinARTSOnlineServicesExtension.zip` is optional and this series doesn't use it.
 
-This walkthrough uses a C++ project to compile the source plugin. The generated game module can remain unchanged while you author the demo's gameplay in Blueprint. Install Visual Studio with the **Game development with C++** workload and the compiler and Windows SDK required by your Unreal Engine installation.
-
-Get the source from the [SeinARTS repository](https://github.com/RJPhenom/SeinARTS). Its binary assets use Git LFS. With Git and Git LFS installed, run these commands in a directory where you keep source downloads:
-
-```powershell
-git lfs install
-git clone https://github.com/RJPhenom/SeinARTS.git SeinARTS-source
-git -C SeinARTS-source lfs pull
-```
-
-Keep this source checkout separate from the new demo project. It supplies the plugin, not a project template to duplicate.
-
-If you already have a compiled framework distribution matching your exact engine build and platform, install that complete plugin folder instead. Keep the distribution's binaries and supporting files together; the source-build instructions below apply to the repository checkout.
+Install Unreal Engine 5.8 through the Epic Games Launcher. The demo is a C++ project so it can package a game that includes the framework; its generated game module stays unchanged while you author the gameplay in Blueprint. Install Visual Studio with the **Game development with C++** workload and the compiler and Windows SDK your Unreal Engine installation requires.
 
 ## 2. Create an empty project
 
@@ -40,15 +28,13 @@ If you already have a compiled framework distribution matching your exact engine
 2. In the project browser, choose **Games > Blank**.
 3. Choose **C++**, target **Desktop**, and name the project `SeinDemo`.
 4. Create the project and let the initial game module finish building.
-5. Close the editor before installing the source plugin.
+5. Close the editor before installing the plugin.
 
 The Blank template's generated C++ files provide the build target. The series authors the game-specific behavior in Blueprint.
 
 ## 3. Install and enable the framework
 
-Create a `Plugins` directory beside `SeinDemo.uproject`.
-
-From the downloaded repository, copy `Plugins/SeinARTSFramework` into that directory. For a source installation, copy the descriptor and its `Source`, `Content`, `Config` and `Resources` directories. Do not reuse the source checkout's `Binaries`, `Intermediate`, or `Saved` directories.
+Create a `Plugins` directory beside `SeinDemo.uproject`, and extract `SeinARTSFramework.zip` into it. The zip holds one `SeinARTSFramework` folder with the plugin's binaries, source, content and configuration; keep them together.
 
 The resulting layout must include:
 
@@ -61,20 +47,21 @@ SeinDemo/
   Plugins/
     SeinARTSFramework/
       SeinARTSFramework.uplugin
-      Source/
-      Content/
+      Binaries/
       Config/
+      Content/
       Resources/
+      Source/
 ```
 
 Check that the descriptor is directly inside `Plugins/SeinARTSFramework`, with no extra nested `SeinARTSFramework` directory.
 
-1. Reopen `SeinDemo.uproject`. If Unreal asks to rebuild missing modules, allow it to build the source plugin.
+1. Reopen `SeinDemo.uproject`.
 2. Open **Edit > Plugins**, search for **SeinARTS Framework**, and enable it.
 3. Confirm its declared dependencies, **Enhanced Input** and **Gameplay Tags Editor**, are enabled.
 4. Restart the editor when prompted.
 
-If the source build fails, stop and resolve its reported compiler or SDK error. With the editor closed, you can regenerate Visual Studio project files from the `.uproject`, open the solution, and build the `SeinDemo` project in **Development Editor / Win64** before reopening Unreal.
+If Unreal reports that modules are missing or were built with a different engine version, the package doesn't match your engine: use Unreal Engine 5.8 and the package for it. If the project's own build fails, resolve its reported compiler or SDK error; with the editor closed, you can regenerate Visual Studio project files from the `.uproject`, open the solution, and build the `SeinDemo` project in **Development Editor / Win64** before reopening Unreal.
 
 At this stage you need the core framework. Its built-in movement, navigation, and fog implementations are available without enabling the optional SeinARTS extensions.
 
