@@ -45,8 +45,10 @@ An effect's **Scope** decides who it reaches: the unit it was applied to, every 
 
 Gameplay commands share one extensible model. Moving, attacking, harvesting, building, patrolling, garrisoning, and reinforcing are ability Blueprints rather than values in a hard-coded command enum.
 
-C++ provides deterministic primitives, command activation and cancellation, and latent execution infrastructure. Designers compose those pieces into Blueprint graphs for the needs of their game.
+C++ provides deterministic primitives, command activation and cancellation, and latent execution infrastructure. Designers compose those pieces into Blueprint graphs for the needs of their game. An ability moves its unit with **Move To** and turns a standing unit with **Face Point**, which holds until the unit next moves: an attack faces its target this way.
 
 ## Presentation reacts to state
 
 The actor and visual layer read the simulation. Animation, effects, audio, and other presentation stay downstream and cannot write back into authoritative state.
+
+Abilities tell presentation what happened with the Notify nodes. **Notify Event** sends a game-defined event, such as a shot, to the Primary Entity's actor, where the Entity Bridge's **On Visual Event** plays its effect. Every machine plays it from the same event, and the simulation never reads it.

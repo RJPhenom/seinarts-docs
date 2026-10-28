@@ -8,9 +8,9 @@ description: Start a blank Unreal Engine project, install SeinARTS, and configur
 This series builds a small RTS demo from an empty project, all of it in Blueprint:
 
 - Two maps: a main menu with a two-slot network lobby, and the game map.
-- Soldiers that move, fight, mine Minerals and build; a Truck with its own steering that carries six of them.
-- A Barracks and a Factory, a production queue, and two researches: Training and Motor Pool.
-- A HUD with resources, selection, actions, the production queue and a minimap; fog of war; health bars.
+- Soldiers that move, fight, mine Minerals and build, turning to face what they shoot, with a muzzle flash and a tracer for every shot; a Truck with its own steering that carries six of them.
+- A Barracks and a Factory that rise out of the ground as they are built, a production queue, and two researches: Training and Motor Pool.
+- A HUD with resources, selection, actions, the production queue and a minimap you click or drag to move the camera and right-click to send units; destination markers under the cursor; fog of war; health bars.
 - Elimination defeat, victory, a pause menu and a computer opponent for slot 2.
 - A packaged game that two players can play over a network.
 

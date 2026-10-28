@@ -32,12 +32,14 @@ Run `Windows\SeinDemo.exe` from the output folder. The menu opens. Host, set slo
 | Action | Expected |
 | --- | --- |
 | Start | A Barracks, three Soldiers and 500 Minerals |
-| Mine | +5 Minerals every 1.5 seconds per Soldier |
+| Select and move | A drag selects units but never buildings; white markers under the cursor show where they will stand |
+| Mine | Soldiers face the rock and fire at it; +5 Minerals every 1.5 seconds per Soldier |
 | Train Soldier | 50 Minerals; a Soldier appears at the Barracks |
 | Research Training, then Motor Pool | 150 and 100 Minerals; Soldiers move and train 30% faster; Build Factory unlocks |
-| Build Barracks or Factory | A Soldier walks to the site and builds it |
+| Build Barracks or Factory | A Soldier walks to the site and builds it; the building rises out of the ground |
 | Train and load a Truck | Soldiers board; Unload sets them down in a row behind it |
-| Fight | Units die, health bars show damage, the AI attacks in groups of four |
+| Minimap | Click or drag to move the camera; right-click sends the selection there |
+| Fight | Soldiers face their targets and fire tracers; units die, health bars show damage, the AI attacks in groups of four |
 | End | Victory or Defeat, then back to the lobby |
 
 ## 4. Play two copies over the network
