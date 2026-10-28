@@ -58,7 +58,7 @@ Add three Fixed Point variables: `MineAmount` `5`, `MineInterval` `1.5` and `Tim
   1. Add `MineInterval` back to `TimeUntilMine`.
   2. The take is the **Min** of `MineAmount` and the rock's `Remaining` (**Get Attribute** on **Target Entity**, `SC_DepositData`, `Remaining`).
   3. **Grant Income** to **Get Entity Owner** of the Owner Entity: **Make Sein Resource Cost** from a **Make Map** of `SeinARTS.Resource.Minerals` → the take.
-  4. **Apply Field Delta** on the rock's `Remaining` by **Negate** of the take, Clamp Min on. If it failed, the rock is gone: **End Ability**. If it succeeded, fire at the rock: **Notify Event** `SeinARTS.Event.Fire` as in `TryShot`, with the Owner Entity as Primary Entity and the Target Entity as Secondary Entity and as the source of Location. Then, if **At Min**, **Destroy Entity** on the rock and End Ability.
+  4. **Apply Field Delta** on the rock's `Remaining` by **Negate** of the take, Clamp Min on. If it failed, the rock is gone: **End Ability**. If it succeeded, fire at the rock: **Notify Event** `SeinARTS.Event.Fire` as in `TryShot`, with the Owner Entity as Primary Entity and the Target Entity as Secondary Entity and as the source of Location, and **Face Point** at that Location. Then, if **At Min**, **Destroy Entity** on the rock and End Ability.
 
 ![SA_Mine's Event Graph.](../../../assets/guides/adding-mineral-income/mine-graph.png)
 

@@ -3,7 +3,7 @@ title: Build Production Buildings
 description: Create the Barracks and Factory, place them from a targeter with a ghost preview, construct them over simulation time, and start each player with a Barracks and three Soldiers.
 ---
 
-![A Factory under construction beside the starting base, its construction bar filling.](../../../assets/guides/building-production-buildings/buildings-header.png)
+![A Barracks rising out of the ground while a Soldier builds it, its construction bar filling, beside a finished one.](../../../assets/guides/building-production-buildings/buildings-header.png)
 
 Complete [Build the HUD](/guides/building-the-hud/) first. This chapter adds the two buildings. A Soldier places one for Minerals; the building starts as a site and becomes usable once Soldiers have worked on it long enough. Each player now starts with a Barracks and three Soldiers.
 
@@ -15,7 +15,7 @@ In `Content/Demo/Units`, create a **SeinARTS Entity Blueprint** (Generic Entity)
 | --- | --- |
 | Sein Identity | Display Name `Barracks`, Description `Trains Soldiers and researches Training and Motor Pool.` |
 | Static Meshes | The model: the demo uses a tent (scale `0.3`) flanked by two sandbag walls at Y `±470`; Collision **No Collision** |
-| Sein Extents | One Box: Half Extent X `250`, Y `400`, Height `320`; Blocks Nav on; Collision Enabled; Mobility **Static** |
+| Sein Extents | One Box: Half Extent X `250`, Y `400`, Height `320`; Blocks Nav on; Collision Enabled; Mobility **Static**; Selection Policy **Like Units Only**; **Include in Drag Selection** off |
 | Sein Vision | Default stamp, Eye Height `180` |
 | Sein Construction | Required Work `20` |
 | `SC_Health` | Max Health and Health `1000` |
@@ -23,6 +23,8 @@ In `Content/Demo/Units`, create a **SeinARTS Entity Blueprint** (Generic Entity)
 | `BPC_SelectionRing` | Location Z `3`, Scale `(8, 8, 1)` |
 
 **Sein Construction** makes the entity buildable. Required Work is the work that completes it: a builder adds its Delta Time each tick, so one Soldier finishes a Barracks in 20 seconds and two in 10.
+
+The two selection settings keep buildings out of unit selections. With **Include in Drag Selection** off, a drag rectangle picks up only units; click a building to select it. **Like Units Only** lets several Barracks share a selection, but never a Barracks and Soldiers, even with Shift.
 
 ## 2. The Factory
 
@@ -38,11 +40,18 @@ Create `SU_Factory` the same way:
 | `HealthBar` Location Z | `600` |
 | Selection ring Scale | `(9, 9, 1)` |
 
-## 3. The construction bar
+## 3. The construction bar and the rise
 
 Create a widget `WBP_BuildProgress` with parent **Sein Construction Work Progress Widget**: a Vertical Box holding a Text Block `Label` and a Progress Bar named `ProgressBar` (`100 × 8`). In Class Defaults set **Progress Label Name** to `Label`.
 
 Add a **Sein Entity Widget Component** `BuildProgress` to both buildings: Widget Class `WBP_BuildProgress`, Space **Screen**, Draw Size `110 × 26`, above the health bar (Z `640` and `720`). The parent class shows it while the building is under construction and hides it when it completes.
+
+A site should also look unfinished. In `Content/Demo/Core`, create a Blueprint `BPC_ConstructionRise` with parent **Sein Entity Binding Component**, which ties a component to its actor's entity. Give it three array variables: `Meshes` (Static Mesh Component), `BaseLocations` (Vector) and `Heights` (Float).
+
+- **Event BeginPlay**: **Get Components by Class** (Static Mesh Component) on **Get Owner**; **For Each Loop**: add the mesh to `Meshes`, its **Get Relative Location** to `BaseLocations`, and twice the Z of its **Get Component Bounds** Box Extent to `Heights`.
+- **Event Tick**: read **Get Entity Handle**. While **Is Under Construction**, take the work left, `1 −` **To Float** of **Get Construction Work Percent**, and in a loop over the indices **Set Relative Location** of each mesh to its base location minus `(0, 0, Heights[i] × left)`. Otherwise, once **Is Entity Alive** (the binding has found the entity), set every mesh back to its base location and **Set Component Tick Enabled** off.
+
+Add `BPC_ConstructionRise` to both buildings. A new site starts sunk into the ground and rises with the work, and a finished building stands at full height, starting Barracks included. The component only reads construction state; it moves the visible meshes and never the entity.
 
 ## 4. Build: SA_Build
 
@@ -146,12 +155,14 @@ Play:
 
 1. Each start has a Barracks with three Soldiers in front of it.
 2. Select the Soldiers and click **Build Barracks**. A ghost follows the cursor, green on open ground and red over the starting Barracks. Click open ground, and drag before releasing to turn it. Minerals drop by 150.
-3. One Soldier walks over and builds; the construction bar fills over 20 seconds. Right-click the site with the others: it fills faster.
-4. Build Factory is listed and builds the same way. The next chapter locks it behind research.
+3. One Soldier walks over and builds; the construction bar fills over 20 seconds and the Barracks rises out of the ground. Right-click the site with the others: it fills faster.
+4. Drag a selection rectangle over a Barracks and the Soldiers: only the Soldiers are selected. Click the Barracks to select it.
+5. Build Factory is listed and builds the same way. The next chapter locks it behind research.
 
 ## Checkpoint
 
-- Both buildings are Static, nav-blocking entities with Sein Construction.
+- Both buildings are Static, nav-blocking entities with Sein Construction, left out of drag selections.
+- `BPC_ConstructionRise` raises a site's meshes with its work.
 - `SA_Place_*` spawn a queued site and order the placer to build it; `SA_Build` adds work each tick.
 - A player starts with a Barracks from its start and three Soldiers from `SA_StartingForces`.
 

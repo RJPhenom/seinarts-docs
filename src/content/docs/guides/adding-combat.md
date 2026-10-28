@@ -44,12 +44,12 @@ Add a function `TryShot` with an input `Target` (Sein Entity Handle) and a Boole
 
 1. Read the owner's weapon with **Get Attribute** (Entity **Owner Entity**, Component Type `SC_CombatData`, Field `Damage`, and again for `Range`). Get Attribute reads the field's effective value, after any upgrades.
 2. **Make Sein Target Query**: Instigator **Owner Entity**, Range from `Range`, Required Component `SC_HealthData`. **Check Target** with the query and `Target`, then **Switch on ESeinTargetCheckResult**. Every result but **Eligible** returns `Continue` false.
-3. On Eligible: add a local Fixed Point variable `Dealt` and set it to the **Min** of Damage and the target's `Health`, the damage this shot actually deals. Then **Apply Field Delta** on the target's `SC_HealthData` field `Health` with Delta **Negate** Damage and **Clamp Min** on, and after it **Notify Damage Applied** (Target, Source **Owner Entity**, Amount `Dealt`). `Dealt` is read before the write, so a killing shot still reports the health it took. Then **Notify Event**: Event Tag `SeinARTS.Event.Fire` (add the tag when prompted), Primary Entity **Owner Entity**, Secondary Entity `Target`; expand the node's advanced pins and set Location to the Location of **Get Entity Transform** on `Target` (**Break Fixed Transform**).
+3. On Eligible: add a local Fixed Point variable `Dealt` and set it to the **Min** of Damage and the target's `Health`, the damage this shot actually deals. Then **Apply Field Delta** on the target's `SC_HealthData` field `Health` with Delta **Negate** Damage and **Clamp Min** on, and after it **Notify Damage Applied** (Target, Source **Owner Entity**, Amount `Dealt`). `Dealt` is read before the write, so a killing shot still reports the health it took. Then **Notify Event**: Event Tag `SeinARTS.Event.Fire` (add the tag when prompted), Primary Entity **Owner Entity**, Secondary Entity `Target`; expand the node's advanced pins and set Location to the Location of **Get Entity Transform** on `Target` (**Break Fixed Transform**). Then **Face Point**: Entity Handle **Owner Entity**, World Point that same Location.
 4. If **At Min**, the target is dead: **Notify Death** (Dying the target, Killer the owner), **Destroy Entity** on the target, and return false. Otherwise return true.
 
 ![SA_Attack's TryShot.](../../../assets/guides/adding-combat/tryshot-graph.png)
 
-Apply Field Delta writes simulation state, so every player's simulation applies the same hit. The Notify nodes only tell presentation what happened: the hit, the shot and the death. Notify Event carries a game-defined event, here `SeinARTS.Event.Fire`, to the Primary Entity's actor; section 4 turns it into a visible shot.
+Apply Field Delta writes simulation state, so every player's simulation applies the same hit. **Face Point** turns the Soldier toward its target at its Turn Rate while it stands, ahead of the facing its last move order left it; the next move clears it. The Notify nodes only tell presentation what happened: the hit, the shot and the death. Notify Event carries a game-defined event, here `SeinARTS.Event.Fire`, to the Primary Entity's actor; section 4 turns it into a visible shot.
 
 ### The firing loop
 
@@ -140,12 +140,12 @@ Compile and save.
 
 ## 6. Test
 
-Set the slot 2 start's **Spawn Entity** to `SU_Soldier` as well, and play. Walk your Soldier towards the other start and right-click the enemy Soldier: yours closes to `900` units and fires about every 0.67 seconds, each shot a flash at the muzzle and a tracer to the target, until one of them dies, ten hits later. Then order a fresh Soldier near the enemy without targeting it: once it stops, Auto-Attack opens fire.
+Set the slot 2 start's **Spawn Entity** to `SU_Soldier` as well, and play. Walk your Soldier towards the other start and right-click the enemy Soldier: yours closes to `900` units, turns to face it and fires about every 0.67 seconds, each shot a flash at the muzzle and a tracer to the target, until one of them dies, ten hits later. Then order a fresh Soldier near the enemy without targeting it: once it stops, Auto-Attack opens fire.
 
 ## Checkpoint
 
 - `SC_Health` and `SC_Combat` are Fixed Point simulation data on the Soldier.
-- `SA_Attack` checks its target and writes Health with Apply Field Delta on a fixed-time loop.
+- `SA_Attack` checks its target, writes Health with Apply Field Delta on a fixed-time loop, and faces the target with Face Point.
 - `SA_AutoAttack` fires only while the Soldier has no order.
 - Each shot sends `SeinARTS.Event.Fire`, and the Soldier plays `NS_RifleShot` from its On Visual Event.
 
