@@ -104,9 +104,9 @@ Open `HUD_Demo` (the HUD Class on `GM_Demo`). Add a variable `HUDWidget` of type
 
 Keep `HUD_Demo` derived from **Sein HUD**: it draws the selection marquee.
 
-## 8. Health bars and selection rings
+## 8. Health bars, selection rings and destination markers
 
-The HUD covers the screen; two small pieces go on the units themselves.
+The HUD covers the screen; three small pieces go on the units themselves.
 
 **Health bar.** Create `WBP_HealthBar` with parent **Sein Entity Widget** (a Sein User Widget is not required here). Its tree is a Size Box `70 × 7` with a Progress Bar named exactly `ProgressBar`. Override the function **Get Progress Display**: read `Health` and `MaxHealth` with **Get Attribute** on **Bound Entity**, convert with **Fixed To Float**, and return **Make Sein Progress Display** with Visible = `Health < MaxHealth` and Percent = **Safe Divide** (`Health`, `MaxHealth`). The bar appears once a unit is damaged.
 
@@ -118,12 +118,14 @@ Create a Blueprint `BPC_SelectionRing` with parent **Static Mesh Component**: St
 
 Add `BPC_SelectionRing` to `SU_Soldier`, Location Z `3` (just above the ground) and Scale `(1.2, 1.2, 1)`. Later units get one scaled to their footprint. The placement ghost copies only meshes that start visible, so the ring stays off it.
 
+**Destination markers.** With units selected, the framework previews where each would stand if you right-clicked under the cursor: the same formation the order would use, reshaped as you right-drag. A unit draws its marker only if it carries a **SeinARTS Navigation Renderer**. Right-click `M_SelectionRing`, choose **Create Material Instance** and name it `MI_MoveMarker`; set its **Color** to white. Add a **SeinARTS Navigation Renderer** component to `SU_Soldier` with **Marker Material** `MI_MoveMarker`. The default renderer draws the marker on a plane sized to the unit's footprint. Every unit that moves gets one.
+
 ## 9. Test the HUD
 
 Play `LVL_Game`:
 
 1. Minerals reads `500`; with nothing selected, no panels show.
-2. Select the Soldier. The info panel reads Soldier, its description and health, `1 selected`, one banner, a ring under the Soldier, and Move, Stop, Attack and Mine buttons. Auto-Attack is passive and gets none.
+2. Select the Soldier. The info panel reads Soldier, its description and health, `1 selected`, one banner, a ring under the Soldier, and Move, Stop, Attack and Mine buttons. Auto-Attack is passive and gets none. Move the cursor over open ground: a white ring follows it, where the Soldier would stand.
 3. Right-click a rock: the counter climbs by 5 every 1.5 seconds.
 4. Click **Stop**: the Soldier stops mining and stands still.
 
@@ -135,6 +137,6 @@ The production queue stays hidden until a building is selected; the next two cha
 
 - The HUD reads only view models; its buttons issue the same orders as a right-click.
 - Slot widgets are refreshed by their parent, so a hidden slot comes back.
-- Health bars and selection rings sit on the units, not in the HUD.
+- Health bars, selection rings and destination markers sit on the units, not in the HUD.
 
 Continue with [Build Production Buildings](/guides/building-production-buildings/).

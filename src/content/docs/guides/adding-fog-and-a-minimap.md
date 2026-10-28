@@ -1,6 +1,6 @@
 ---
 title: Add Fog and a Minimap
-description: Darken what the local player cannot see, and draw a minimap with fog, unit markers, the camera's view and click-to-move-camera.
+description: Darken what the local player cannot see, and draw a minimap with fog, unit markers and the camera's view; click it to move the camera, right-click it to move units.
 ---
 
 ![Fog of war around the starting base, with the minimap in the corner.](../../../assets/guides/adding-fog-and-a-minimap/fog-header.png)
@@ -83,14 +83,17 @@ Return after the loop. Because On Paint draws inside the widget, the markers tur
 
 ![The minimap's On Paint function.](../../../assets/guides/adding-fog-and-a-minimap/minimap-paint-graph.png)
 
-## 6. Click to move the camera
+## 6. Clicks: camera and orders
 
 Override **On Mouse Button Down**:
 
 1. **Minimap Local To World**: Local Pos = **Absolute to Local** of the event's Geometry and the pointer's **Get Screen Space Position**; Widget Size = the Geometry's **Get Local Size**; the view model's World Bounds Min, World Bounds Max and Ground Z; Map Rotation Deg `0` (the widget's own transform is already in its local space); Circle Clip off.
 2. Branch on its result AND **Is Mouse Button Down** (Left Mouse Button).
 3. True: **Get Owning Player Pawn**, cast to **Sein Camera Pawn**, **Focus on World Point** with Out World, and return **Handled**.
-4. Otherwise return **Unhandled**.
+4. False: Branch on the same result AND **Is Mouse Button Down** (Right Mouse Button). True: **Get Owning Player**, cast to **Sein Player Controller**, **Issue Smart Command** with World Location = Out World and no Target Actor, and return **Handled**.
+5. Otherwise, and when a cast fails, return **Unhandled**.
+
+Issue Smart Command sends the order a right-click on empty ground sends: each selected unit runs its Default Command for that context, so Soldiers and the Truck move there.
 
 ## 7. Add it to the HUD
 
@@ -104,11 +107,12 @@ Play `LVL_Game`:
 - Your units are green, mineral rocks yellow, enemy units red only while seen.
 - Fog on the map matches fog in the world, including dimmed explored ground.
 - Click the minimap: the camera jumps there. Rotate the camera with Q and E: the map turns with it.
+- Select your Soldiers and right-click the minimap: they walk to that spot, and the camera stays put.
 
 ## Checkpoint
 
 - Fog is drawn from the local player's vision, after tonemapping.
 - The minimap draws markers in On Paint, without a widget per unit.
-- A minimap click moves only the local camera; it never orders units.
+- A left click moves only the local camera; a right click orders the selection there, like a right click on the ground.
 
 Continue with [Add Victory, Defeat and an AI](/guides/adding-victory-defeat-and-ai/).

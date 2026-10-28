@@ -62,6 +62,7 @@ Create a Sein entity Blueprint `SU_Truck` in `Content/Demo/Units`. Add a Static 
 | Sein Producible | Build Time `10` |
 | `HealthBar` (Sein Entity Widget) | As on the Soldier, Location Z `330` |
 | `BPC_SelectionRing` | Location Z `3`, Scale `(4, 4, 1)` |
+| SeinARTS Navigation Renderer | Marker Material `MI_MoveMarker` |
 
 Turn Rate still caps how fast any movement mode can turn the Truck, in radians per second. The steering turns at most Speed ÷ `TurnRadius`, about `1.7`, so a cap of `10` never binds and the mode's own variables decide how it turns.
 
